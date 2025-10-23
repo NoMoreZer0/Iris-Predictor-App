@@ -1,0 +1,48 @@
+name: deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build Docker Images
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: SSH into Server and Build
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.HOST_IP }}
+        username: root
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: 22
+        script: |
+          set -e
+          
+          cd /opt/Iris-Predictor-App
+          git pull
+          docker compose build
+          
+          echo "Build completed."
+
+  deploy:
+    name: Deploy Docker Stack
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: SSH into Server and Deploy
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.HOST_IP }}
+        username: root
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: 22
+        script: |
+          set -e
+          
+          cd /opt/Iris-Predictor-App
+          docker compose up -d
+          
+          echo "Deployment completed."
