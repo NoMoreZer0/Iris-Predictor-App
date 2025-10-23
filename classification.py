@@ -157,7 +157,7 @@ proba_df = pd.DataFrame(prediction_proba, columns=target_names)
 st.markdown(
     """
     <div style="text-align:center;">
-        <h1 style="color:#4CAF50; font-size:3em;">🌸 Iris Species Prediction App</h1>
+        <h1 style="color:#4CAF50; font-size:3em;">🌸 Iris Species Prediction App BY CSE-2404M</h1>
         <p style="font-size:1.2em; color:#555;">
             Predict the species of an iris flower using different classifiers.<br>
             Try single predictions, upload a CSV for batch predictions, or explore the data visually.
